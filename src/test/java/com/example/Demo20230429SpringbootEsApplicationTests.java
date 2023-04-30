@@ -32,11 +32,17 @@ import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
 import org.elasticsearch.xcontent.XContentType;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
@@ -176,5 +182,21 @@ class Demo20230429SpringbootEsApplicationTests {
         for (SearchHit obj:searchResponse.getHits().getHits()) {
             System.out.println(obj.getSourceAsString());
         }
+    }
+    @Test
+    public void jsoupParse() throws IOException {
+        String url="https://search.jd.com/Search?keyword=java";
+        Document document = Jsoup.parse(new URL(url), 60000);
+        Element element = document.getElementById("J_goodsList");
+        Elements elements = element.getElementsByTag("li");
+        for (Element el:elements) {
+            String img = el.getElementsByTag("img").eq(0).attr("data-lazy-img");
+            System.out.println(img);
+            String price = el.getElementsByClass("p-price").eq(0).text();
+            System.out.println(price);
+            String name = el.getElementsByClass("p-name").eq(0).text();
+            System.out.println(name);
+        }
+
     }
 }
