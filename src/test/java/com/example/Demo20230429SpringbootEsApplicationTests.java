@@ -25,9 +25,7 @@ import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.indices.GetIndexRequest;
 import org.elasticsearch.core.TimeValue;
-import org.elasticsearch.index.query.MatchAllQueryBuilder;
-import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.index.query.TermQueryBuilder;
+import org.elasticsearch.index.query.*;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.FetchSourceContext;
@@ -170,9 +168,10 @@ class Demo20230429SpringbootEsApplicationTests {
         System.out.println("连接成功--------------------------");
         SearchRequest searchRequest = new SearchRequest("test");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-        searchSourceBuilder.highlighter();
-       // TermQueryBuilder termQueryBuilder = QueryBuilders.termQuery("name", "d1");
-       // searchSourceBuilder.query(termQueryBuilder);
+       // searchSourceBuilder.highlighter();
+//        WildcardQueryBuilder termQueryBuilder = QueryBuilders.wildcardQuery("title", "java");
+//        searchSourceBuilder.query(termQueryBuilder);
+
         MatchAllQueryBuilder matchAllQueryBuilder = QueryBuilders.matchAllQuery();
         searchSourceBuilder.query(matchAllQueryBuilder);
         searchSourceBuilder.timeout(new TimeValue(60, TimeUnit.SECONDS));
